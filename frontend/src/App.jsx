@@ -7,11 +7,12 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import ForgotPassowrd from './pages/ForgotPassowrd.jsx';
 import SignUp from './pages/SignUp.jsx';
+import { ToastContainer, toast } from 'react-toastify';
   
   function App() {
     return (
       <div>
-        
+             <ToastContainer />
         <Header/>
         <Router>
           <Routes>
