@@ -12,3 +12,4 @@ router.post("/signin",userSignInController)
 router.get("/user-details",authToken,userDetailsController)
 
 module.exports = router
+
