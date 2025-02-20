@@ -3,12 +3,13 @@ import Logo from './Logo'
 import { GrSearch } from "react-icons/gr";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { FaShoppingCart } from "react-icons/fa";
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 
 
-const header = () => {
+const Header = () => {
+  const navigate = useNavigate();
 
   return (
     <header className='h-16 shadow-md bg-white'>
@@ -40,7 +41,10 @@ const header = () => {
 
   </div>
 <div> 
-  <button className='px-3 py-1 rounded-full text-white bg-red-600 hover:bg-red-700'>Login</button>
+  <button 
+    className='px-3 py-1 rounded-full text-white bg-red-600 hover:bg-red-700'
+    onClick={() => navigate("/login")}>
+    Login</button>
 </div>
 
 </div>
@@ -49,4 +53,4 @@ const header = () => {
   )
 }
 
-export default header
+export default Header

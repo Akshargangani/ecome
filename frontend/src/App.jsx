@@ -1,31 +1,67 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import './App.css';
-import Header from './components/Header.jsx';
-import Footer from './components/Footer.jsx';
+import Context from './context/index.jsx';
+import { setUserDetails } from './store/userSlice.jsx';
+import SummaryApi from './common';
+import Header from './components/Header';
 import Home from './pages/Home';
 import Login from './pages/Login';
-import ForgotPassowrd from './pages/ForgotPassowrd.jsx';
-import SignUp from './pages/SignUp.jsx';
-import { ToastContainer, toast } from 'react-toastify';
-  
-  function App() {
-    return (
-      <div>
-             <ToastContainer />
-        <Header/>
-        <Router>
-          <Routes>
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/forgot-password" element={<ForgotPassowrd />} />
+import SignUp from './pages/SignUp';
+import ForgotPassword from './pages/ForgotPassword';
+import Footer from './components/Footer';
+
+
+function App() {
+
+  const fetchUserDetails = async()=>{
+    const dataResponse = await fetch(SummaryApi.current_user.url,{
+      method : SummaryApi.current_user.method,
+      credentials : 'include'
+    })
+
+    const dataApi = await dataResponse.json()
+
+    if(dataApi.success){
+      dispatch(setUserDetails(dataApi.data))
+    }
+}
+  const dispatch = useDispatch();
+
+  // const fetchUserDetails = async () => {
+  //   try {
+  //     const dataResponse = await fetch(SummaryApi.current_user.url, {
+  //       method: SummaryApi.current_user.method,
+  //       credentials: 'include',
+  //     });
+  //     const dataApi = await dataResponse.json();
+  //     if (dataApi.success) {
+  //       dispatch(setUserDetails(dataApi.data));
+  //     }
+  //   } 
+  //   catch (error) {
+  //     console.error('Error fetching user details:', error);
+  //   }
+  // };
+
+  const contextValue = {
+    fetchUserDetails,
+  };
+
+  return (
+    <Context.Provider value={contextValue}>
+      <Router>
+        <Header />
+        <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
-          </Routes>
-        </Router>
-        <Footer/>
-      
-      </div>
-    );
-  }
-  
-  export default App;
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+        </Routes>
+        <Footer />
+      </Router>
+    </Context.Provider>
+  );
+}
+
+export default App;
