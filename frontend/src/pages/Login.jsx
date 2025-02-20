@@ -1,9 +1,11 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import loginIcon from  '../assest/signin.gif'
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
-import { Link } from 'react-router-dom';
-
+import { Link, useNavigate } from 'react-router-dom';
+import SummaryApi from '../common';
+import {toast } from 'react-toastify';
+import Context from '../context/index.jsx'; // Add this import statement
 
 const Login = () => {
   const [showPassword,setShowPassword] = useState(false)
@@ -11,7 +13,9 @@ const Login = () => {
     email : "",
     password : ""
 })
+ const navigate = useNavigate()
 
+ const { fetchUserDetails, fetchUserAddToCart } = useContext(Context)
 
 
 const handleOnChange = (e) =>{
@@ -25,10 +29,43 @@ const handleOnChange = (e) =>{
   })
 }
 
-const handleSubmit = async(e) =>{
-  e.preventDefault()
-}
 
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const dataResponse = await fetch(SummaryApi.signIn.url, {
+      method: SummaryApi.signIn.method,
+      credentials: 'include',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!dataResponse.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const dataApi = await dataResponse.json();
+
+    if (dataApi.success) {
+      toast.success(dataApi.message);
+      navigate('/');
+      fetchUserDetails();
+      
+      // fetchUserAddToCart();
+    }
+
+    if (dataApi.error) {
+      toast.error(dataApi.message);
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    toast.error('Failed to login. Please try again.');
+  }
+};
 
 console.log("data login",data)
 
