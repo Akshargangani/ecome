@@ -1,3 +1,5 @@
+const userModel = require("../../models/userModel.jsx")
+
 async function userDetailsController(req,res){
 try{
     console.log("userId",req.userId)
@@ -8,7 +10,7 @@ try{
     res.status(200).json({
         data : user,
         error : false,
-        success : true,
+        success : true,  
         message : "User details"
     })
 
