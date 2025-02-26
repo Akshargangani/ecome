@@ -51,7 +51,7 @@ const router = createBrowserRouter([
             },
             {
                 path : "admin-panel",
-                element : <AdminPanel/>,
+                element : <Login/>,
                 children : [
                     {
                         path : "all-users",
