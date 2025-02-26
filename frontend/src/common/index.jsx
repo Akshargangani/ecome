@@ -1,4 +1,4 @@
-const backendDomin = "http://localhost:5000"
+const backendDomin = "http://localhost:3000"
 
 const SummaryApi = {
     signUP : {
@@ -16,6 +16,14 @@ const SummaryApi = {
     logout_user : {
         url : `${backendDomin}/api/userLogout`,
         method : 'get'
+    }, 
+    allUser : {
+        url : `${backendDomin}/api/allUsers`,
+        method : 'get'
+    },
+    updateUser : {
+        url : `${backendDomin}/api/update-user`,
+        method : "post"
     },
 
 }
