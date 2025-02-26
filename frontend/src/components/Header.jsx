@@ -14,7 +14,7 @@ const Header = () => {
   const user = useSelector((state) => state?.user?.user); // User state from Redux
   const [menuDisplay,setMenuDisplay] = useState(false)
 
-  console.log("user-header", user);
+  // console.log("user-header", user);
 
   const handleLogout = async () => {
     try {
@@ -73,14 +73,16 @@ const Header = () => {
 
           {/* Profile Icon (always visible, separate) */}
 
-          <div className="relative group">
+          <div 
+            className="relative group"
+            onClick={() => navigate("/Admin")}>
             <Link to="/profile" className="text-2xl">
               <img // Add User Icon when you delete Img name and replace to {FaUser} Name
-                src="phato.jpg"
+                src="phote.jpg"
                 alt="Profile"
                 className="w-10 h-10 rounded-full cursor-pointer object-cover"/>
-              <div className="hidden group-hover:block absolute top-full left-0 bg-white shadow-md p-2 rounded cursor-default text-base whitespace-nowrap w-15">
-                Popup
+              <div className="hidden group-hover:block absolute top-full left-0 bg-white shadow-md p-2 rounded cursor-default text-base whitespace-nowrap w-25">
+              AdminPanel
               </div>
               
             </Link>
